@@ -1,4 +1,4 @@
-"""LLM eligibility criteria extractor (Claude, structured output via tool use).
+"""LLM eligibility criteria extractor (structured output via tool use).
 
 The model reads the free-text criteria and records them through a tool whose
 input schema is the `Criterion` model, so the response is always valid,

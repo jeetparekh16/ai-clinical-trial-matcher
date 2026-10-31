@@ -3,7 +3,7 @@
 Example: "58 year old woman in Maryland with type 2 diabetes, A1c 8.4%,
 eGFR 72, on metformin" -> Patient(age=58, sex="female", state="MD", ...).
 
-With an API key, Claude does the parsing (handles any phrasing); without
+With an API key, the LLM does the parsing (handles any phrasing); without
 one, regular expressions cover the common patterns.
 """
 

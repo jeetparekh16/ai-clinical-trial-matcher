@@ -32,13 +32,13 @@ ITEMS = [
 
 def test_llm_output_is_validated_and_normalised():
     messages = FakeMessages(ITEMS)
-    criteria = LLMExtractor(messages, "claude-test").extract("Inclusion Criteria: ...")
+    criteria = LLMExtractor(messages, "test-model").extract("Inclusion Criteria: ...")
     assert [c.category for c in criteria] == [Category.LAB, Category.CONDITION, Category.MEDICATION, Category.OTHER]
     assert criteria[0].field == "hba1c"
     assert criteria[1].value == "type 1 diabetes"
     assert criteria[2].value == "glp-1 receptor agonist"
     call = messages.calls[0]
-    assert call["model"] == "claude-test"
+    assert call["model"] == "test-model"
     assert call["tool_choice"] == {"type": "tool", "name": "record_criteria"}
     assert "Never invent thresholds" in call["system"]
 

@@ -54,6 +54,6 @@ def test_llm_parser_uses_tool_output():
             calls.append(kwargs)
             return SimpleNamespace(content=[block])
 
-    p = LLMPatientParser(Messages(), "claude-test").parse("45F with T2D, A1c 7.9, Virginia")
+    p = LLMPatientParser(Messages(), "test-model").parse("45F with T2D, A1c 7.9, Virginia")
     assert p.conditions == ["type 2 diabetes"] and p.labs == {"hba1c": 7.9} and p.state == "VA"
     assert calls[0]["tool_choice"] == {"type": "tool", "name": "record_patient"}

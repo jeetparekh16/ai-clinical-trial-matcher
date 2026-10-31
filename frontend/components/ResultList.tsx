@@ -14,7 +14,7 @@ export function ResultList({ data }: { data: MatchResponse }) {
           <strong>{data.condition}</strong>
         </p>
         <p className="fine">
-          Criteria read by {data.extractor === "llm" ? "Claude" : "the built-in rule parser (add an API key to use Claude)"}.
+          Criteria read by {data.extractor === "llm" ? "the LLM" : "the built-in rule parser (add an API key to use the LLM)"}.
           {data.data_source === "sample" ? " Showing demo trials." : " Source: ClinicalTrials.gov."}
         </p>
         {data.notice && <p className="notice">{data.notice}</p>}

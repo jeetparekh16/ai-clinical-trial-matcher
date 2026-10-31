@@ -4,25 +4,25 @@
 
 ![Trial Match screenshot](docs/screenshot.png)
 
-Finding trials is slow because eligibility criteria are free text: *"HbA1c between 7.5% and 10.5%"*, *"no insulin within 90 days"*, *"ECOG 0–1"*. Research coordinators read them one trial at a time. This app uses Claude to turn that text into structured rules once per trial, then checks a patient against the rules with plain, deterministic code, so every verdict is explainable.
+Finding trials is slow because eligibility criteria are free text: *"HbA1c between 7.5% and 10.5%"*, *"no insulin within 90 days"*, *"ECOG 0–1"*. Research coordinators read them one trial at a time. This app uses an LLM to turn that text into structured rules once per trial, then checks a patient against the rules with plain, deterministic code, so every verdict is explainable.
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 ![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs)
-![Claude](https://img.shields.io/badge/LLM-Claude-6B4FBB)
+![LLM](https://img.shields.io/badge/LLM-structured%20output-6B4FBB)
 
 ## What it does
 
 1. **Reads the patient.** *"58 year old woman in Maryland with type 2 diabetes, A1c 8.4%, BMI 31, eGFR 72, on metformin"* becomes structured data: age, sex, conditions, medications, labs, location. The app shows what it understood so the user can correct it.
 2. **Finds recruiting trials** for the condition through the [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api).
-3. **Turns each trial's criteria into rules.** Claude extracts `{"field": "hba1c", "operator": "between", "value": 7.5, "value_max": 10.5}` and similar, using structured output (tool use with a JSON schema), so responses are always valid.
+3. **Turns each trial's criteria into rules.** The LLM extracts `{"field": "hba1c", "operator": "between", "value": 7.5, "value_max": 10.5}` and similar, using structured output (tool use with a JSON schema), so responses are always valid.
 4. **Checks every rule** against the patient: *Meets*, *Fails*, or *Check* when information is missing. Exclusions read as *Clear* or *Excluded*.
 5. **Ranks trials** into *Likely*, *Possibly* and *Not eligible*, boosts trials with a site in the patient's state, and explains each result in a sentence.
 
 ## Design decisions
 
-**The LLM reads; code decides.** Claude only converts text into rules. Whether a patient meets a rule is decided by plain Python, so the model cannot hallucinate eligibility, every verdict cites the rule and the patient fact behind it, and results are repeatable.
+**The LLM reads; code decides.** The LLM only converts text into rules. Whether a patient meets a rule is decided by plain Python, so the model cannot hallucinate eligibility, every verdict cites the rule and the patient fact behind it, and results are repeatable.
 
 **Missing information is never a pass.** If the description has no eGFR, an eGFR criterion shows *Check*, not *Meets*. Criteria a program cannot judge (consent, investigator opinion) are flagged for human review rather than guessed.
 
@@ -35,9 +35,9 @@ Finding trials is slow because eligibility criteria are free text: *"HbA1c betwe
 ```mermaid
 flowchart LR
     U["Next.js UI"] -- "POST /api/match" --> A["FastAPI"]
-    A --> PP["Patient parser<br/>Claude or rules"]
+    A --> PP["Patient parser<br/>LLM or rules"]
     A --> CT["ClinicalTrials.gov<br/>API v2"]
-    CT --> EX["Criteria extractor<br/>Claude structured output"]
+    CT --> EX["Criteria extractor<br/>LLM structured output"]
     EX <--> C[("SQLite cache")]
     EX -. "on failure" .-> R["Rule-based extractor"]
     PP --> M["Deterministic matcher"]
@@ -47,7 +47,7 @@ flowchart LR
 
 | Path | What it does |
 |---|---|
-| `backend/trialmatch/criteria_llm.py` | Claude extractor: forced tool call whose input schema is the `Criterion` model; output normalised to a shared vocabulary |
+| `backend/trialmatch/criteria_llm.py` | LLM extractor: forced tool call whose input schema is the `Criterion` model; output normalised to a shared vocabulary |
 | `backend/trialmatch/criteria_rules.py` | Offline extractor: section and bullet splitting, threshold parsing (`≥ 7.5`, `between 7 and 10`, `18 years or older`) |
 | `backend/trialmatch/matcher.py` | Evaluates rules, inverts exclusions, tiers and ranks trials, writes explanations |
 | `backend/trialmatch/extractor.py` | Chooses the extractor, caches results, falls back to rules on any LLM error |
@@ -62,7 +62,7 @@ A matcher is only as good as its rules, so extraction is evaluated against hand-
 | Extractor | Data | Exact match | Recall on checkable criteria | Unsafe rate |
 |---|---|---|---|---|
 | Rules (offline) | Held-out set, 40 criteria | 88% | 85% | 2% |
-| Claude | Held-out set, 40 criteria | run it with your key | | |
+| LLM | Held-out set, 40 criteria | run it with your key | | |
 
 The rules were written alongside a separate 52-item development set (`dev_set.jsonl`), where they score 100%; that set is a regression test, not a measure of accuracy. The held-out set was written afterwards in different phrasing and was not used for tuning. Its misses are in [`eval/results_rules_heldout.md`](backend/eval/results_rules_heldout.md): mostly unusual age phrasing ("eighteen (18) years of age") and indirect medication wording ("requires ongoing anticoagulation"), which is where the LLM extractor is expected to help.
 
@@ -81,7 +81,7 @@ ANTHROPIC_API_KEY=sk-... python eval/run_eval.py --extractor llm
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-export ANTHROPIC_API_KEY=sk-...        # optional: use Claude instead of the rule parser
+export ANTHROPIC_API_KEY=sk-...        # optional: use the LLM instead of the rule parser
 export TRIAL_DATA_SOURCE=live          # or "sample" for the offline demo trials
 uvicorn trialmatch.api:app --port 8000
 
@@ -126,7 +126,7 @@ The LLM paths are tested with a fake Anthropic client (structured output, normal
 
 - SMART on FHIR launch to read the patient from an EHR instead of free text
 - Distance-based site ranking using the API's geo coordinates
-- Claude-written plain-language trial summaries for patients
+- LLM-written plain-language trial summaries for patients
 - LLM eval results across models (cost, latency, accuracy) published in the repo
 
 ## License
