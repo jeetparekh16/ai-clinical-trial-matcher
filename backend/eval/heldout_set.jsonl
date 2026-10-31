@@ -1,0 +1,40 @@
+{"kind": "inclusion", "text": "Subjects must be at least eighteen (18) years of age", "expected": {"category": "age", "field": "age", "operator": ">=", "value": 18, "value_max": null}}
+{"kind": "inclusion", "text": "Aged 50 years and over", "expected": {"category": "age", "field": "age", "operator": ">=", "value": 50, "value_max": null}}
+{"kind": "inclusion", "text": "Patients aged \u226518 and \u226480 years", "expected": {"category": "age", "field": "age", "operator": "between", "value": 18, "value_max": 80}}
+{"kind": "exclusion", "text": "Age over 70 years", "expected": {"category": "age", "field": "age", "operator": ">", "value": 70, "value_max": null}}
+{"kind": "inclusion", "text": "Hemoglobin A1c of 7.0-9.5% within 30 days of enrollment", "expected": {"category": "lab", "field": "hba1c", "operator": "between", "value": 7.0, "value_max": 9.5}}
+{"kind": "inclusion", "text": "A1C greater than or equal to 6.5% on two occasions", "expected": {"category": "lab", "field": "hba1c", "operator": ">=", "value": 6.5, "value_max": null}}
+{"kind": "exclusion", "text": "Screening HbA1c above 10 percent", "expected": {"category": "lab", "field": "hba1c", "operator": ">", "value": 10, "value_max": null}}
+{"kind": "inclusion", "text": "Obesity, defined as BMI \u2265 30", "expected": {"category": "lab", "field": "bmi", "operator": ">=", "value": 30, "value_max": null}}
+{"kind": "exclusion", "text": "Body mass index greater than 40 kg/m^2", "expected": {"category": "lab", "field": "bmi", "operator": ">", "value": 40, "value_max": null}}
+{"kind": "exclusion", "text": "Severe renal impairment (eGFR <15 mL/min/1.73m2) or on dialysis", "expected": {"category": "lab", "field": "egfr", "operator": "<", "value": 15, "value_max": null}}
+{"kind": "inclusion", "text": "Estimated GFR of at least 60 mL/min", "expected": {"category": "lab", "field": "egfr", "operator": ">=", "value": 60, "value_max": null}}
+{"kind": "exclusion", "text": "LVEF < 30% on most recent echocardiogram", "expected": {"category": "lab", "field": "ejection_fraction", "operator": "<", "value": 30, "value_max": null}}
+{"kind": "inclusion", "text": "Fasting LDL cholesterol between 100 and 190 mg/dL", "expected": {"category": "lab", "field": "ldl", "operator": "between", "value": 100, "value_max": 190}}
+{"kind": "exclusion", "text": "Uncontrolled hypertension (systolic BP \u2265 160 mmHg)", "expected": {"category": "lab", "field": "systolic_bp", "operator": ">=", "value": 160, "value_max": null}}
+{"kind": "inclusion", "text": "ECOG PS \u2264 2", "expected": {"category": "performance_status", "field": "ecog", "operator": "<=", "value": 2, "value_max": null}}
+{"kind": "inclusion", "text": "Performance status 0-1 on the ECOG scale", "expected": {"category": "performance_status", "field": "ecog", "operator": "<=", "value": 1, "value_max": null}}
+{"kind": "exclusion", "text": "Currently pregnant", "expected": {"category": "pregnancy", "field": "pregnancy", "operator": "present", "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Nursing mothers", "expected": {"category": "pregnancy", "field": "pregnancy", "operator": "present", "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Confirmed diagnosis of hypertension on antihypertensive therapy", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "hypertension", "value_max": null}}
+{"kind": "inclusion", "text": "Clinical diagnosis of major depression per DSM-5", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "major depressive disorder", "value_max": null}}
+{"kind": "exclusion", "text": "Prior diagnosis of schizophrenia or schizoaffective disorder", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "schizophrenia", "value_max": null}}
+{"kind": "exclusion", "text": "History of stroke or transient ischemic attack", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "stroke", "value_max": null}}
+{"kind": "inclusion", "text": "Stage 3 or 4 chronic kidney disease", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "chronic kidney disease", "value_max": null}}
+{"kind": "exclusion", "text": "Positive for hepatitis C antibody with detectable viral load", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "hepatitis c", "value_max": null}}
+{"kind": "inclusion", "text": "Non-small cell lung cancer, stage IIIB or IV", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "lung cancer", "value_max": null}}
+{"kind": "exclusion", "text": "Paroxysmal or persistent atrial fibrillation", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "atrial fibrillation", "value_max": null}}
+{"kind": "inclusion", "text": "Alcohol dependence as defined by DSM-IV", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "alcohol use disorder", "value_max": null}}
+{"kind": "exclusion", "text": "Prior treatment with an SGLT2 inhibitor within 8 weeks", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "sglt2 inhibitor", "value_max": null}}
+{"kind": "exclusion", "text": "Patients on chronic opioid therapy for pain", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "opioids", "value_max": null}}
+{"kind": "inclusion", "text": "Receiving statin therapy at a stable dose for \u22654 weeks", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "statin", "value_max": null}}
+{"kind": "exclusion", "text": "Current or recent (within 3 months) buprenorphine use", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "buprenorphine", "value_max": null}}
+{"kind": "exclusion", "text": "Requires ongoing anticoagulation", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "anticoagulant", "value_max": null}}
+{"kind": "inclusion", "text": "English or Spanish speaking", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Has a primary care provider at a participating clinic", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Unable to attend in-person visits", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Life expectancy less than 6 months", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Major surgery within 4 weeks of randomization", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Signed informed consent", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Incarcerated individuals", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Female participants only", "expected": {"category": "sex", "field": "sex", "operator": "==", "value": "female", "value_max": null}}

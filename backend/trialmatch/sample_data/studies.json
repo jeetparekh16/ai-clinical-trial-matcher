@@ -1,0 +1,565 @@
+{
+  "_note": "Synthetic demo trials in ClinicalTrials.gov API v2 format. Not real studies; IDs start with DEMO.",
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0001",
+          "briefTitle": "Once-Weekly GLP-1 Therapy for Adults With Poorly Controlled Type 2 Diabetes"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE3"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Type 2 Diabetes"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Tests whether a once-weekly injectable lowers HbA1c more than standard care in adults whose diabetes is not controlled on metformin."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Diagnosis of type 2 diabetes for at least 6 months\n* HbA1c between 7.5% and 10.5% at screening\n* Currently taking metformin at a stable dose for 3 months\n* BMI of 25 kg/m2 or higher\n\nExclusion Criteria:\n\n* Type 1 diabetes\n* eGFR less than 30 mL/min/1.73m2\n* History of pancreatitis\n* Currently pregnant or breastfeeding\n* Use of insulin within the last 90 days\n* Any condition that, in the investigator's opinion, makes participation unsafe",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "75 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Johns Hopkins Bayview Clinic",
+              "city": "Baltimore",
+              "state": "Maryland",
+              "country": "United States"
+            },
+            {
+              "facility": "MedStar Research Institute",
+              "city": "Washington",
+              "state": "District of Columbia",
+              "country": "United States"
+            },
+            {
+              "facility": "UCSF Diabetes Center",
+              "city": "San Francisco",
+              "state": "California",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0002",
+          "briefTitle": "Digital Coaching Plus SGLT2 Inhibitor in Type 2 Diabetes With Kidney Disease"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE4"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Type 2 Diabetes",
+            "Chronic Kidney Disease"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Evaluates an app-based coaching program added to an SGLT2 inhibitor for people with diabetes and reduced kidney function."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Adults aged 40 to 80 years\n* Type 2 diabetes mellitus\n* eGFR between 25 and 60 mL/min/1.73m2\n* Owns a smartphone\n\nExclusion Criteria:\n\n* Dialysis or kidney transplant\n* HbA1c greater than 11%\n* Heart failure hospitalization in the past 3 months",
+          "sex": "ALL",
+          "minimumAge": "40 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "80 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Inova Kidney Center",
+              "city": "Fairfax",
+              "state": "Virginia",
+              "country": "United States"
+            },
+            {
+              "facility": "Mass General Hospital",
+              "city": "Boston",
+              "state": "Massachusetts",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0003",
+          "briefTitle": "Intensive Insulin Titration for Type 2 Diabetes in Older Adults"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE2"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Type 2 Diabetes"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Compares two insulin titration schedules in adults 65 and older."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Age 65 years or older\n* Type 2 diabetes treated with insulin\n* HbA1c of at least 8%\n\nExclusion Criteria:\n\n* Severe hypoglycemia in the past 6 months\n* Active malignancy",
+          "sex": "ALL",
+          "minimumAge": "65 Years",
+          "healthyVolunteers": false
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Baylor Scott & White Research",
+              "city": "Dallas",
+              "state": "Texas",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0004",
+          "briefTitle": "Blood Pressure Self-Monitoring With Pharmacist Support"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "NA"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Hypertension"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Tests home blood pressure monitoring with telehealth pharmacist visits for uncontrolled hypertension."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Diagnosis of hypertension\n* Systolic blood pressure of 140 mmHg or higher at screening\n* Age 30 to 85\n\nExclusion Criteria:\n\n* Pregnancy\n* Chronic kidney disease requiring dialysis\n* Heart attack or stroke within the past 6 months",
+          "sex": "ALL",
+          "minimumAge": "30 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "85 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "University of Maryland Medical Center",
+              "city": "Baltimore",
+              "state": "Maryland",
+              "country": "United States"
+            },
+            {
+              "facility": "Emory Clinic",
+              "city": "Atlanta",
+              "state": "Georgia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0005",
+          "briefTitle": "Remote Monitoring for Heart Failure With Reduced Ejection Fraction"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "NA"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Heart Failure"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Evaluates a wearable sensor that alerts care teams to early signs of fluid buildup."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Heart failure with left ventricular ejection fraction of 40% or less\n* Hospitalized for heart failure in the past 12 months\n* Age 18 years or older\n\nExclusion Criteria:\n\n* eGFR below 20 mL/min/1.73m2\n* Life expectancy under 1 year due to non-cardiac disease",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Cleveland Clinic",
+              "city": "Cleveland",
+              "state": "Ohio",
+              "country": "United States"
+            },
+            {
+              "facility": "George Washington University Hospital",
+              "city": "Washington",
+              "state": "District of Columbia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0006",
+          "briefTitle": "Extended-Release Buprenorphine After Emergency Department Visit"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE4"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Opioid Use Disorder"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Starts monthly buprenorphine injections in the emergency department and links patients to ongoing treatment."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Meets DSM-5 criteria for opioid use disorder\n* Age 18 to 65 years\n* Willing to start buprenorphine treatment\n\nExclusion Criteria:\n\n* Currently receiving methadone treatment\n* Pregnant or breastfeeding\n* Severe liver disease",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "65 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Johns Hopkins Hospital ED",
+              "city": "Baltimore",
+              "state": "Maryland",
+              "country": "United States"
+            },
+            {
+              "facility": "Bellevue Hospital",
+              "city": "New York",
+              "state": "New York",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0007",
+          "briefTitle": "Psilocybin-Assisted Therapy for Treatment-Resistant Depression"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE2"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Major Depressive Disorder"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Studies two doses of psilocybin with psychological support in adults whose depression has not responded to treatment."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Diagnosis of major depressive disorder\n* Age 21 to 65 years\n* Failed at least two antidepressant treatments\n\nExclusion Criteria:\n\n* Bipolar disorder or schizophrenia\n* Systolic blood pressure above 150 mmHg\n* Pregnant or nursing",
+          "sex": "ALL",
+          "minimumAge": "21 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "65 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "NIMH Clinical Center",
+              "city": "Bethesda",
+              "state": "Maryland",
+              "country": "United States"
+            },
+            {
+              "facility": "UCLA Semel Institute",
+              "city": "Los Angeles",
+              "state": "California",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0008",
+          "briefTitle": "Oral SERD Versus Standard Endocrine Therapy in ER+ Breast Cancer"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE3"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Breast Cancer"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Compares a new oral pill with standard endocrine therapy after progression on first-line treatment."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Postmenopausal women\n* Diagnosis of ER-positive, HER2-negative breast cancer\n* ECOG performance status 0-1\n\nExclusion Criteria:\n\n* Prior chemotherapy for advanced disease\n* Untreated brain metastases",
+          "sex": "FEMALE",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Dana-Farber Cancer Institute",
+              "city": "Boston",
+              "state": "Massachusetts",
+              "country": "United States"
+            },
+            {
+              "facility": "MD Anderson Cancer Center",
+              "city": "Houston",
+              "state": "Texas",
+              "country": "United States"
+            },
+            {
+              "facility": "Sibley Memorial Hospital",
+              "city": "Washington",
+              "state": "District of Columbia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0009",
+          "briefTitle": "Biologic Therapy for Severe Eosinophilic Asthma"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE3"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Asthma"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Tests an injectable biologic in people with severe asthma who still have attacks despite inhalers."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Diagnosis of asthma for at least 12 months\n* Age 12 to 75 years\n* Two or more asthma attacks needing oral steroids in the past year\n\nExclusion Criteria:\n\n* Current smoker or more than 10 pack-years\n* Diagnosis of COPD\n* Pregnancy",
+          "sex": "ALL",
+          "minimumAge": "12 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "75 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "National Jewish Health",
+              "city": "Denver",
+              "state": "Colorado",
+              "country": "United States"
+            },
+            {
+              "facility": "Children's National",
+              "city": "Washington",
+              "state": "District of Columbia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0010",
+          "briefTitle": "Weekly Injectable for Weight Management in Adults With Obesity"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE3"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Obesity"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Measures weight loss with a weekly injection plus lifestyle counseling over 68 weeks."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* BMI of 30 kg/m2 or greater\n* Age 18 to 70 years\n* At least one failed dieting attempt\n\nExclusion Criteria:\n\n* Type 1 diabetes\n* HbA1c of 10% or higher\n* History of pancreatitis\n* Currently taking a GLP-1 receptor agonist",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false,
+          "maximumAge": "70 Years"
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Pennington Biomedical Research Center",
+              "city": "Baton Rouge",
+              "state": "Louisiana",
+              "country": "United States"
+            },
+            {
+              "facility": "MedStar Washington Hospital Center",
+              "city": "Washington",
+              "state": "District of Columbia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0011",
+          "briefTitle": "Finerenone for Chronic Kidney Disease Without Diabetes"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "PHASE3"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Chronic Kidney Disease"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Tests whether finerenone slows kidney function decline in non-diabetic kidney disease."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Chronic kidney disease\n* eGFR between 25 and 90 mL/min/1.73m2\n\nExclusion Criteria:\n\n* Type 1 diabetes or type 2 diabetes\n* Dialysis",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Vanderbilt Kidney Clinic",
+              "city": "Nashville",
+              "state": "Tennessee",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "DEMO0012",
+          "briefTitle": "Smartphone Relapse Prevention for Alcohol Use Disorder"
+        },
+        "statusModule": {
+          "overallStatus": "RECRUITING"
+        },
+        "designModule": {
+          "phases": [
+            "NA"
+          ]
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Alcohol Use Disorder"
+          ]
+        },
+        "descriptionModule": {
+          "briefSummary": "Evaluates an app that combines craving tracking with coaching messages after treatment."
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Alcohol use disorder\n* Age 18 years or older\n* Completed a treatment program in the past 30 days\n\nExclusion Criteria:\n\n* Currently taking naltrexone\n* Schizophrenia",
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "healthyVolunteers": false
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Hazelden Betty Ford",
+              "city": "Center City",
+              "state": "Minnesota",
+              "country": "United States"
+            },
+            {
+              "facility": "Inova Behavioral Health",
+              "city": "Falls Church",
+              "state": "Virginia",
+              "country": "United States"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      # Leave empty to use the offline rule-based extractor.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-claude-haiku-5-5}
+      # "live" = ClinicalTrials.gov, "sample" = bundled demo trials.
+      TRIAL_DATA_SOURCE: ${TRIAL_DATA_SOURCE:-live}
+    volumes:
+      - criteria-cache:/data
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+volumes:
+  criteria-cache:

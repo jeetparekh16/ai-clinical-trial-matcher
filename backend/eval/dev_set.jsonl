@@ -1,0 +1,52 @@
+{"kind": "inclusion", "text": "Adults aged 18 to 75 years", "expected": {"category": "age", "field": "age", "operator": "between", "value": 18, "value_max": 75}}
+{"kind": "inclusion", "text": "Age \u2265 21 years at the time of consent", "expected": {"category": "age", "field": "age", "operator": ">=", "value": 21, "value_max": null}}
+{"kind": "inclusion", "text": "Male or female patients 40 years of age or older", "expected": {"category": "age", "field": "age", "operator": ">=", "value": 40, "value_max": null}}
+{"kind": "inclusion", "text": "Participants must be between 12 and 17 years old", "expected": {"category": "age", "field": "age", "operator": "between", "value": 12, "value_max": 17}}
+{"kind": "inclusion", "text": "HbA1c between 7.0% and 10.5% (inclusive) at screening", "expected": {"category": "lab", "field": "hba1c", "operator": "between", "value": 7.0, "value_max": 10.5}}
+{"kind": "inclusion", "text": "Glycated hemoglobin (HbA1c) \u2265 7.5%", "expected": {"category": "lab", "field": "hba1c", "operator": ">=", "value": 7.5, "value_max": null}}
+{"kind": "exclusion", "text": "HbA1c > 11% at screening", "expected": {"category": "lab", "field": "hba1c", "operator": ">", "value": 11, "value_max": null}}
+{"kind": "inclusion", "text": "Body mass index (BMI) of 27 kg/m\u00b2 or greater", "expected": {"category": "lab", "field": "bmi", "operator": ">=", "value": 27, "value_max": null}}
+{"kind": "inclusion", "text": "BMI 30-45 kg/m2", "expected": {"category": "lab", "field": "bmi", "operator": "between", "value": 30, "value_max": 45}}
+{"kind": "exclusion", "text": "BMI below 18.5", "expected": {"category": "lab", "field": "bmi", "operator": "<", "value": 18.5, "value_max": null}}
+{"kind": "exclusion", "text": "Estimated glomerular filtration rate (eGFR) < 30 mL/min/1.73 m\u00b2", "expected": {"category": "lab", "field": "egfr", "operator": "<", "value": 30, "value_max": null}}
+{"kind": "inclusion", "text": "eGFR between 25 and 75 mL/min/1.73m2 at screening", "expected": {"category": "lab", "field": "egfr", "operator": "between", "value": 25, "value_max": 75}}
+{"kind": "exclusion", "text": "eGFR less than 45 mL/min/1.73m2", "expected": {"category": "lab", "field": "egfr", "operator": "<", "value": 45, "value_max": null}}
+{"kind": "inclusion", "text": "LDL-C \u2265 70 mg/dL despite statin therapy", "expected": {"category": "lab", "field": "ldl", "operator": ">=", "value": 70, "value_max": null}}
+{"kind": "inclusion", "text": "Left ventricular ejection fraction (LVEF) \u2264 40%", "expected": {"category": "lab", "field": "ejection_fraction", "operator": "<=", "value": 40, "value_max": null}}
+{"kind": "exclusion", "text": "Systolic blood pressure > 180 mmHg at screening", "expected": {"category": "lab", "field": "systolic_bp", "operator": ">", "value": 180, "value_max": null}}
+{"kind": "inclusion", "text": "Seated systolic blood pressure of 140 mmHg or higher", "expected": {"category": "lab", "field": "systolic_bp", "operator": ">=", "value": 140, "value_max": null}}
+{"kind": "inclusion", "text": "ECOG performance status of 0 or 1", "expected": {"category": "performance_status", "field": "ecog", "operator": "<=", "value": 1, "value_max": null}}
+{"kind": "inclusion", "text": "Eastern Cooperative Oncology Group (ECOG) performance status 0-2", "expected": {"category": "performance_status", "field": "ecog", "operator": "<=", "value": 2, "value_max": null}}
+{"kind": "exclusion", "text": "Pregnant or breastfeeding women", "expected": {"category": "pregnancy", "field": "pregnancy", "operator": "present", "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Women who are pregnant, planning to become pregnant, or lactating", "expected": {"category": "pregnancy", "field": "pregnancy", "operator": "present", "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Women of childbearing potential must have a negative pregnancy test and agree to use contraception", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Diagnosis of type 2 diabetes mellitus for at least 180 days", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "type 2 diabetes", "value_max": null}}
+{"kind": "exclusion", "text": "History of type 1 diabetes or diabetic ketoacidosis", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "type 1 diabetes", "value_max": null}}
+{"kind": "exclusion", "text": "Personal or family history of medullary thyroid carcinoma", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "History of acute or chronic pancreatitis", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "pancreatitis", "value_max": null}}
+{"kind": "inclusion", "text": "Documented diagnosis of heart failure (NYHA class II-IV)", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "heart failure", "value_max": null}}
+{"kind": "exclusion", "text": "Myocardial infarction, stroke, or unstable angina within 3 months prior to screening", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "myocardial infarction", "value_max": null}}
+{"kind": "inclusion", "text": "Physician-diagnosed asthma for at least 12 months", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "asthma", "value_max": null}}
+{"kind": "exclusion", "text": "Current diagnosis of COPD or other significant lung disease", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "copd", "value_max": null}}
+{"kind": "inclusion", "text": "Meets DSM-5 criteria for moderate to severe opioid use disorder", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "opioid use disorder", "value_max": null}}
+{"kind": "exclusion", "text": "Diagnosis of bipolar disorder, schizophrenia, or other psychotic disorder", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "bipolar disorder", "value_max": null}}
+{"kind": "inclusion", "text": "Histologically confirmed HER2-negative breast cancer", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "breast cancer", "value_max": null}}
+{"kind": "exclusion", "text": "Active malignancy within the past 5 years, except treated basal cell carcinoma", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "cancer", "value_max": null}}
+{"kind": "exclusion", "text": "Known HIV infection", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "hiv", "value_max": null}}
+{"kind": "exclusion", "text": "Chronic kidney disease requiring dialysis", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "dialysis", "value_max": null}}
+{"kind": "exclusion", "text": "Cirrhosis or other significant liver disease", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "liver disease", "value_max": null}}
+{"kind": "inclusion", "text": "On a stable dose of metformin (\u22651500 mg/day) for at least 3 months", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "metformin", "value_max": null}}
+{"kind": "exclusion", "text": "Treatment with insulin within 90 days prior to screening", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "insulin", "value_max": null}}
+{"kind": "exclusion", "text": "Current use of a GLP-1 receptor agonist", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "glp-1 receptor agonist", "value_max": null}}
+{"kind": "exclusion", "text": "Currently receiving methadone maintenance", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "methadone", "value_max": null}}
+{"kind": "exclusion", "text": "Concurrent use of warfarin or other anticoagulants", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "warfarin", "value_max": null}}
+{"kind": "exclusion", "text": "Use of systemic corticosteroids in the 4 weeks before screening", "expected": {"category": "medication", "field": "medication", "operator": "present", "value": "systemic corticosteroids", "value_max": null}}
+{"kind": "inclusion", "text": "Able and willing to provide written informed consent", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Willing to comply with all study procedures and visits", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Participation in another interventional study within 30 days", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Any condition that, in the opinion of the investigator, would compromise safety", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Access to a smartphone with internet", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "exclusion", "text": "Known hypersensitivity to the study drug or its excipients", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "Postmenopausal women", "expected": {"category": "sex", "field": "sex", "operator": "==", "value": "female", "value_max": null}}
+{"kind": "exclusion", "text": "Current smoker (any tobacco use in the past 30 days)", "expected": {"category": "other", "field": null, "operator": null, "value": null, "value_max": null}}
+{"kind": "inclusion", "text": "At least two asthma exacerbations requiring oral corticosteroids in the previous 12 months", "expected": {"category": "condition", "field": "condition", "operator": "present", "value": "asthma", "value_max": null}}
