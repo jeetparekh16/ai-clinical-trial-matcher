@@ -11,9 +11,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import Settings
 from .ctgov import ClinicalTrialsClient, SampleTrials
-from .engine import UNREACHABLE_NOTICE, MatchInputError, resolve_patient, run_match
+from .engine import UNREACHABLE_NOTICE, MatchInputError, fhir_patient, resolve_patient, run_match
 from .extractor import CriteriaService, build_service
-from .models import MatchRequest, MatchResponse, ParsePatientRequest, Patient, Trial
+from .models import FhirPatientRequest, FhirPatientResponse, MatchRequest, MatchResponse, ParsePatientRequest, Patient, Trial
 from .patient_parser import LLMPatientParser, parse_rules
 
 log = logging.getLogger(__name__)
@@ -74,6 +74,14 @@ def create_app(
     @app.post("/api/parse-patient", response_model=Patient)
     def parse_patient_endpoint(body: ParsePatientRequest) -> Patient:
         return parse_patient(body.text)
+
+    @app.post("/api/fhir/patient", response_model=FhirPatientResponse)
+    def fhir_patient_endpoint(body: FhirPatientRequest) -> dict:
+        """Map FHIR R4 resources (e.g. from a SMART on FHIR launch) to a structured patient."""
+        try:
+            return fhir_patient(body.resources)
+        except (ValueError, TypeError, KeyError, AttributeError) as exc:
+            raise HTTPException(422, "The EHR returned data this app could not read.") from exc
 
     @app.post("/api/match", response_model=MatchResponse)
     def match(body: MatchRequest) -> MatchResponse:

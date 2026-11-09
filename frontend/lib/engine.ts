@@ -2,7 +2,7 @@
 // the visitor's browser with Pyodide ("browser"), which is how the free
 // GitHub Pages demo works: the same Python package, no server.
 
-import type { MatchResponse } from "./types";
+import type { MatchResponse, Patient } from "./types";
 
 export interface MatchRequest {
   patient_description?: string | null;
@@ -25,6 +25,37 @@ export class MatchError extends Error {}
 
 export async function runMatch(request: MatchRequest, onStatus?: (status: string) => void): Promise<MatchResponse> {
   return ENGINE === "browser" ? browserMatch(request, onStatus) : serverMatch(request);
+}
+
+export interface FhirPatient {
+  patient: Patient;
+  name: string | null;
+}
+
+/** Maps FHIR resources from an EHR (or the sample record) to a structured patient. */
+export async function patientFromFhir(resources: unknown[], onStatus?: (status: string) => void): Promise<FhirPatient> {
+  let body: { patient?: Patient; name?: string | null; error?: string; detail?: string };
+  if (ENGINE === "browser") {
+    const pyodide = await loadEngine(onStatus);
+    body = JSON.parse(pyodide.globals.get("browser_fhir_patient")(JSON.stringify(resources)));
+  } else {
+    const response = await fetch(`${BASE_PATH}/api/fhir/patient`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resources }),
+    }).catch(() => {
+      throw new MatchError("The matching service is not running. Start the backend on port 8000.");
+    });
+    body = await response.json();
+  }
+  if (!body.patient) throw new MatchError(body.error ?? (typeof body.detail === "string" ? body.detail : "Could not read the EHR record."));
+  return { patient: body.patient, name: body.name ?? null };
+}
+
+export async function loadSampleRecord(): Promise<unknown[]> {
+  const response = await fetch(`${BASE_PATH}/fhir/sample_patient_bundle.json`);
+  if (!response.ok) throw new MatchError("Could not load the sample EHR record.");
+  return [await response.json()];
 }
 
 async function serverMatch(request: MatchRequest): Promise<MatchResponse> {
@@ -84,7 +115,7 @@ export function loadEngine(onStatus?: (status: string) => void): Promise<Pyodide
         return r.arrayBuffer();
       });
       pyodide.unpackArchive(archive, "zip", { extractDir: "/home/pyodide/app" });
-      pyodide.runPython("import sys; sys.path.insert(0, '/home/pyodide/app'); from trialmatch.engine import browser_prepare, browser_match");
+      pyodide.runPython("import sys; sys.path.insert(0, '/home/pyodide/app'); from trialmatch.engine import browser_prepare, browser_match, browser_fhir_patient");
       return pyodide;
     })().catch((error) => {
       pyodidePromise = null;

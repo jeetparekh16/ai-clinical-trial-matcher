@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -121,6 +121,15 @@ class MatchResponse(BaseModel):
     trials_screened: int
     results: list[MatchResult]
     notice: str | None = None
+
+
+class FhirPatientRequest(BaseModel):
+    resources: list[dict[str, Any]] = Field(max_length=2000, description="FHIR R4 resources or Bundles.")
+
+
+class FhirPatientResponse(BaseModel):
+    patient: Patient
+    name: str | None = None
 
 
 class ParsePatientRequest(BaseModel):

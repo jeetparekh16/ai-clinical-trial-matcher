@@ -16,11 +16,22 @@ Finding trials is slow because eligibility criteria are free text: *"HbA1c betwe
 
 ## What it does
 
-1. **Reads the patient.** *"58 year old woman in Maryland with type 2 diabetes, A1c 8.4%, BMI 31, eGFR 72, on metformin"* becomes structured data: age, sex, conditions, medications, labs, location. The app shows what it understood so the user can correct it.
+1. **Reads the patient.** *"58 year old woman in Maryland with type 2 diabetes, A1c 8.4%, BMI 31, eGFR 72, on metformin"* becomes structured data: age, sex, conditions, medications, labs, location. The app shows what it understood so the user can correct it. Or it reads the patient **straight from an EHR with SMART on FHIR** (see below).
 2. **Finds recruiting trials** for the condition through the [ClinicalTrials.gov API v2](https://clinicaltrials.gov/data-api/api).
 3. **Turns each trial's criteria into rules.** The LLM extracts `{"field": "hba1c", "operator": "between", "value": 7.5, "value_max": 10.5}` and similar, using structured output (tool use with a JSON schema), so responses are always valid.
 4. **Checks every rule** against the patient: *Meets*, *Fails*, or *Check* when information is missing. Exclusions read as *Clear* or *Excluded*.
 5. **Ranks trials** into *Likely*, *Possibly* and *Not eligible*, boosts trials with a site in the patient's state, and explains each result in a sentence.
+
+## Reading the patient from an EHR (SMART on FHIR)
+
+Typing a description works for a demo; real screening starts from the chart. The app is a SMART on FHIR app, the standard Epic, Oracle Health (Cerner) and other EHRs use to let third-party apps read a patient's record.
+
+- **Standalone launch with PKCE.** The browser discovers the EHR's endpoints from `.well-known/smart-configuration`, sends the user to sign in and pick a patient, and exchanges the code for a token with a PKCE verifier (S256). It is a public client: no secret, no server, and the token never leaves the browser.
+- **Reads only what matching needs:** `Patient`, active `Condition`s, the latest lab and vital `Observation`s by LOINC code (HbA1c, eGFR, BMI, LDL, LVEF, blood pressure panel components, ECOG) and active `MedicationRequest`s.
+- **Maps codes, not just text:** SNOMED CT for conditions and LOINC for labs, falling back to display text through the shared vocabulary. Resolved conditions, refuted diagnoses, stopped medications and `entered-in-error` results are ignored ([`fhir.py`](backend/trialmatch/fhir.py)).
+- **Try it** on the live demo with the public [SMART sandbox](https://launch.smarthealthit.org) (synthetic patients), or with the bundled sample record.
+
+The full launch is tested end to end against a mock EHR that verifies the PKCE challenge, the bearer token and the patient scope, including rejecting a forged callback.
 
 ## Design decisions
 
@@ -112,7 +123,7 @@ Interactive API docs: http://localhost:8000/docs
 ## Tests
 
 ```bash
-cd backend && pytest && ruff check .     # 55 tests: extractors, parser, matcher, engine, API, ClinicalTrials.gov client
+cd backend && pytest && ruff check .     # 62 tests: extractors, parser, FHIR mapping, matcher, engine, API, ClinicalTrials.gov client
 cd frontend && npm test && npm run typecheck && npm run build
 ```
 
@@ -123,12 +134,12 @@ The LLM paths are tested with a fake Anthropic client (structured output, normal
 - **A screening aid, not a medical decision.** Final eligibility is always confirmed by the study team.
 - The demo trials (IDs starting `DEMO`) are synthetic and written for this project; they are not real studies.
 - The medical vocabulary is small and hand-curated. A production version would map terms to UMLS, SNOMED CT and RxNorm.
-- Free-text patient descriptions lose nuance. A production version would read structured data from an EHR over FHIR.
+- The SMART client has been tested against the public sandbox protocol and a mock EHR, not a production EHR, which requires app registration with each vendor.
 - Never enter real patient identifiers into a deployment that is not HIPAA-compliant.
 
 ## Roadmap
 
-- SMART on FHIR launch to read the patient from an EHR instead of free text
+- EHR launch (SMART "launch from inside the EHR") in addition to the standalone launch
 - Distance-based site ranking using the API's geo coordinates
 - LLM-written plain-language trial summaries for patients
 - LLM eval results across models (cost, latency, accuracy) published in the repo

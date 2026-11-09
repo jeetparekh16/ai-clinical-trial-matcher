@@ -1,0 +1,389 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      {
+        "display": "Synthetic demo patient, not a real person"
+      }
+    ]
+  },
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:demo-1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "demo-1",
+        "name": [
+          {
+            "use": "official",
+            "family": "Rivera",
+            "given": [
+              "Ana"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1968-03-14",
+        "address": [
+          {
+            "city": "Silver Spring",
+            "state": "MD",
+            "postalCode": "20910",
+            "country": "US"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-1",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-1",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "code": "confirmed"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "44054006",
+              "display": "Diabetes mellitus type 2 (disorder)"
+            }
+          ],
+          "text": "Diabetes mellitus type 2 (disorder)"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "onsetDateTime": "2019-06-02"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-2",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-2",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "59621000",
+              "display": "Essential hypertension (disorder)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cond-3",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-3",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "code": "resolved"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "195967001",
+              "display": "Asthma (disorder)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-1",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-1",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "effectiveDateTime": "2025-11-20T09:00:00Z",
+        "valueQuantity": {
+          "value": 9.1,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-2",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+            }
+          ],
+          "text": "Hemoglobin A1c/Hemoglobin.total in Blood"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "effectiveDateTime": "2026-09-15T09:00:00Z",
+        "valueQuantity": {
+          "value": 8.4,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-3",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-3",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33914-3",
+              "display": "Glomerular filtration rate/1.73 sq M.predicted"
+            }
+          ],
+          "text": "Glomerular filtration rate/1.73 sq M.predicted"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "effectiveDateTime": "2026-09-15T09:00:00Z",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "mL/min/{1.73_m2}",
+          "system": "http://unitsofmeasure.org",
+          "code": "mL/min/{1.73_m2}"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-4",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-4",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index (BMI) [Ratio]"
+            }
+          ],
+          "text": "Body mass index (BMI) [Ratio]"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "effectiveDateTime": "2026-09-15T09:00:00Z",
+        "valueQuantity": {
+          "value": 31.2,
+          "unit": "kg/m2",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg/m2"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:obs-5",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-5",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        },
+        "effectiveDateTime": "2026-09-15T09:00:00Z",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6",
+                  "display": "Systolic blood pressure"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 138,
+              "unit": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4",
+                  "display": "Diastolic blood pressure"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 86,
+              "unit": "mm[Hg]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:med-1",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-1",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "860975",
+              "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:med-2",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-2",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "314076",
+              "display": "lisinopril 10 MG Oral Tablet"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:med-3",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-3",
+        "status": "stopped",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "text": "Insulin glargine 100 UNT/ML"
+        },
+        "subject": {
+          "reference": "Patient/demo-1"
+        }
+      }
+    }
+  ]
+}

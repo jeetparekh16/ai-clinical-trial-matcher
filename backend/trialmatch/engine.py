@@ -117,6 +117,20 @@ def browser_match(request_json: str, studies_json: str | None = None, live_faile
     return response.model_dump_json()
 
 
+def fhir_patient(resources: list[dict[str, Any]] | dict[str, Any]) -> dict[str, Any]:
+    """Structured patient and display name from FHIR resources."""
+    from .fhir import display_name, patient_from_fhir
+
+    return {"patient": patient_from_fhir(resources).model_dump(mode="json"), "name": display_name(resources)}
+
+
+def browser_fhir_patient(resources_json: str) -> str:
+    try:
+        return json.dumps(fhir_patient(json.loads(resources_json)))
+    except (ValueError, TypeError, KeyError, AttributeError):
+        return json.dumps({"error": "The EHR returned data this app could not read."})
+
+
 def _message(exc: Exception) -> str:
     if isinstance(exc, MatchInputError):
         return str(exc)

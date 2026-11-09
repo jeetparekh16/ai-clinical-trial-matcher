@@ -56,3 +56,12 @@ def test_engine_imports_without_server_dependencies(monkeypatch):
     monkeypatch.setattr(builtins, "__import__", guarded)
     fresh = importlib.import_module("trialmatch.engine")
     assert json.loads(fresh.browser_match(REQUEST))["results"]
+
+
+def test_browser_fhir_patient():
+    from importlib import resources
+
+    bundle = resources.files("trialmatch").joinpath("sample_data/sample_patient_bundle.json").read_text()
+    data = json.loads(engine.browser_fhir_patient(bundle))
+    assert data["name"] == "Ana Rivera" and data["patient"]["labs"]["hba1c"] == 8.4
+    assert "error" in json.loads(engine.browser_fhir_patient('"just a string"'))

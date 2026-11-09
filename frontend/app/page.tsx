@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ResultList } from "@/components/ResultList";
-import { ENGINE, loadEngine, runMatch } from "@/lib/engine";
+import { ENGINE, type FhirPatient, loadEngine, loadSampleRecord, patientFromFhir, runMatch } from "@/lib/engine";
+import { completeLaunch, DEFAULT_FHIR_SERVER, isLaunchCallback, startLaunch } from "@/lib/smart";
 import { patientFacts } from "@/lib/format";
 import type { MatchResponse } from "@/lib/types";
 
@@ -28,22 +29,66 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [ehr, setEhr] = useState<(FhirPatient & { source: string }) | null>(null);
+  const [fhirServer, setFhirServer] = useState(DEFAULT_FHIR_SERVER);
 
-  // In the browser demo, start loading the Python engine while the visitor reads.
   useEffect(() => {
-    if (ENGINE === "browser") loadEngine().catch(() => undefined);
+    // Back from the EHR's sign in page: finish the SMART launch.
+    if (isLaunchCallback()) {
+      loadFromEhr(async () => {
+        setStatus("Reading the patient's record from the EHR…");
+        const { resources, server } = await completeLaunch();
+        return { resources, source: new URL(server).host };
+      });
+    } else if (ENGINE === "browser") {
+      // In the browser demo, start loading the Python engine while the visitor reads.
+      loadEngine().catch(() => undefined);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function loadFromEhr(fetchRecord: () => Promise<{ resources: unknown[]; source: string }>) {
+    setLoading(true);
+    setError(null);
+    try {
+      const { resources, source } = await fetchRecord();
+      const record = await patientFromFhir(resources, setStatus);
+      setEhr({ ...record, source });
+      await match(record);
+    } catch (e) {
+      setData(null);
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+      setStatus(null);
+    }
+  }
+
+  async function signInToEhr() {
+    setError(null);
+    try {
+      await startLaunch(fhirServer);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  }
+
+  async function match(record: FhirPatient | null) {
+    const result = await runMatch(
+      record
+        ? { patient: record.patient, condition: condition.trim() || null, limit: 15 }
+        : { patient_description: description, condition: condition.trim() || null, limit: 15 },
+      setStatus,
+    );
+    setData(result);
+  }
 
   async function findTrials(event?: React.FormEvent) {
     event?.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      const result = await runMatch(
-        { patient_description: description, condition: condition.trim() || null, limit: 15 },
-        setStatus,
-      );
-      setData(result);
+      await match(ehr);
     } catch (e) {
       setData(null);
       setError((e as Error).message);
@@ -64,25 +109,38 @@ export default function Home() {
         </p>
 
         <form onSubmit={findTrials} className="form">
-          <label htmlFor="description">Patient</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={6}
-            maxLength={4000}
-            required
-          />
-          <div className="examples" role="group" aria-label="Example patients">
-            {EXAMPLES.map((ex) => (
-              <button key={ex.label} type="button" className="example" aria-pressed={description === ex.text} onClick={() => setDescription(ex.text)}>
-                {ex.label}
+          {ehr ? (
+            <div className="ehr-patient" role="status">
+              <p>
+                <strong>{ehr.name ?? "EHR patient"}</strong>, from {ehr.source}
+              </p>
+              <button type="button" className="link" onClick={() => setEhr(null)}>
+                Describe a patient instead
               </button>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <>
+              <label htmlFor="description">Patient</label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={6}
+                maxLength={4000}
+                required
+              />
+              <div className="examples" role="group" aria-label="Example patients">
+                {EXAMPLES.map((ex) => (
+                  <button key={ex.label} type="button" className="example" aria-pressed={description === ex.text} onClick={() => setDescription(ex.text)}>
+                    {ex.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           <label htmlFor="condition">
-            Condition to search <span className="optional">optional, uses the first one in the description</span>
+            Condition to search <span className="optional">optional, uses the first condition found</span>
           </label>
           <input
             id="condition"
@@ -98,15 +156,43 @@ export default function Home() {
           {status && <p className="fine status" role="status">{status}</p>}
         </form>
 
+        {!ehr && (
+          <section className="ehr" aria-labelledby="ehr-heading">
+            <h2 id="ehr-heading">Or read the patient from an EHR</h2>
+            <p className="fine">
+              Signs in with SMART on FHIR, the standard EHRs like Epic and Cerner use for apps, and reads conditions, labs
+              and medications. The default server is the public SMART sandbox with synthetic patients.
+            </p>
+            <div className="ehr-actions">
+              <button type="button" className="secondary" onClick={signInToEhr} disabled={loading}>
+                Sign in to EHR sandbox
+              </button>
+              <button
+                type="button"
+                className="secondary"
+                disabled={loading}
+                onClick={() => loadFromEhr(async () => ({ resources: await loadSampleRecord(), source: "a sample FHIR record" }))}
+              >
+                Use a sample record
+              </button>
+            </div>
+            <details>
+              <summary>FHIR server</summary>
+              <label htmlFor="fhir-server" className="sr-only">FHIR server address</label>
+              <input id="fhir-server" value={fhirServer} onChange={(e) => setFhirServer(e.target.value)} spellCheck={false} />
+            </details>
+          </section>
+        )}
+
         {data && (
           <section className="understood" aria-label="What we understood">
-            <h2>What we read from the description</h2>
+            <h2>{ehr ? "What we read from the EHR record" : "What we read from the description"}</h2>
             <ul>
               {patientFacts(data.patient).map((fact) => (
                 <li key={fact}>{fact}</li>
               ))}
             </ul>
-            <p className="fine">If something is missing or wrong, edit the description. Missing facts show as &ldquo;Check&rdquo;, never as a pass.</p>
+            <p className="fine">{ehr ? "Facts missing from the record" : "If something is missing or wrong, edit the description. Missing facts"} show as &ldquo;Check&rdquo;, never as a pass.</p>
           </section>
         )}
       </aside>

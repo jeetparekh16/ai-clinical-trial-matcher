@@ -76,3 +76,16 @@ def test_falls_back_to_sample_when_live_api_is_down():
 def test_parse_patient_endpoint(client):
     data = client.post("/api/parse-patient", json={"text": "72 yo man, COPD, Ohio"}).json()
     assert data["age"] == 72 and data["sex"] == "male" and data["conditions"] == ["copd"] and data["state"] == "OH"
+
+
+def test_fhir_patient_endpoint(client):
+    import json
+    from importlib import resources
+
+    bundle = json.loads(resources.files("trialmatch").joinpath("sample_data/sample_patient_bundle.json").read_text())
+    data = client.post("/api/fhir/patient", json={"resources": [bundle]}).json()
+    assert data["name"] == "Ana Rivera"
+    assert data["patient"]["conditions"] == ["type 2 diabetes", "hypertension"]
+    match = client.post("/api/match", json={"patient": data["patient"], "limit": 3}).json()
+    assert match["results"][0]["trial"]["nct_id"] == "DEMO0001"
+    assert client.post("/api/fhir/patient", json={"resources": "nope"}).status_code == 422
