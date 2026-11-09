@@ -5,12 +5,13 @@ from __future__ import annotations
 import json
 import re
 from importlib import resources
-from typing import Any
-
-import httpx
+from typing import TYPE_CHECKING, Any
 
 from .models import Location, Trial
 from .vocab import conditions_match, normalize_condition, state_code
+
+if TYPE_CHECKING:
+    import httpx
 
 
 def _age_years(value: str | None) -> float | None:
@@ -68,22 +69,31 @@ class ClinicalTrialsClient:
     ])
 
     def __init__(self, base_url: str = "https://clinicaltrials.gov/api/v2", http: httpx.Client | None = None) -> None:
+        # Imported here so the package also runs in the browser (Pyodide) without httpx.
+        import httpx
+
         self.base_url = base_url.rstrip("/")
         self.http = http or httpx.Client(timeout=20.0, headers={"User-Agent": "ai-clinical-trial-matcher/1.0"})
 
     def search(self, condition: str, state: str | None = None, limit: int = 40) -> list[Trial]:
+        params = self.search_params(condition, state, limit)
+        response = self.http.get(f"{self.base_url}/studies", params=params)
+        response.raise_for_status()
+        return [parse_study(s) for s in response.json().get("studies", [])]
+
+    @classmethod
+    def search_params(cls, condition: str, state: str | None = None, limit: int = 40) -> dict[str, Any]:
+        """Query parameters for a recruiting-studies search (shared with the browser demo)."""
         params: dict[str, Any] = {
             "query.cond": condition,
             "filter.overallStatus": "RECRUITING",
             "pageSize": min(limit, 100),
-            "fields": self.FIELDS,
+            "fields": cls.FIELDS,
             "format": "json",
         }
         if state:
             params["query.locn"] = state
-        response = self.http.get(f"{self.base_url}/studies", params=params)
-        response.raise_for_status()
-        return [parse_study(s) for s in response.json().get("studies", [])]
+        return params
 
 
 class SampleTrials:

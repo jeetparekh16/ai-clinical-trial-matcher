@@ -10,7 +10,6 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-import sqlite3
 import threading
 from pathlib import Path
 from typing import Literal, Protocol
@@ -30,8 +29,23 @@ class RuleExtractor:
         return criteria_rules.extract(eligibility_text)
 
 
+class MemoryCache:
+    """In-process cache, used where SQLite is unavailable (the browser demo)."""
+
+    def __init__(self) -> None:
+        self._data: dict[str, list[Criterion]] = {}
+
+    def get(self, key: str) -> list[Criterion] | None:
+        return self._data.get(key)
+
+    def put(self, key: str, extractor: str, criteria: list[Criterion]) -> None:
+        self._data[key] = criteria
+
+
 class CriteriaCache:
     def __init__(self, path: str) -> None:
+        import sqlite3
+
         if path != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
         self._db = sqlite3.connect(path, check_same_thread=False)
@@ -55,7 +69,7 @@ class CriteriaCache:
 class CriteriaService:
     """Returns the full list of criteria for a trial: structured fields + extracted text."""
 
-    def __init__(self, primary: Extractor, name: Literal["llm", "rules"], cache: CriteriaCache) -> None:
+    def __init__(self, primary: Extractor, name: Literal["llm", "rules"], cache: CriteriaCache | MemoryCache) -> None:
         self.primary = primary
         self.name = name
         self.cache = cache

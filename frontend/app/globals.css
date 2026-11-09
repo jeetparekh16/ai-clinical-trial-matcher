@@ -251,3 +251,5 @@ td.verdict { width: 104px; white-space: nowrap; font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; }
 }
+
+.status { margin: 4px 0 0; }

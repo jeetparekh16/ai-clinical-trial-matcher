@@ -2,6 +2,8 @@
 
 **Describe a patient in plain English. See which recruiting clinical trials they could join, with every eligibility criterion checked and explained.**
 
+**[Try the live demo](https://jeetparekh16.github.io/ai-clinical-trial-matcher/)**: no sign up, runs entirely in your browser.
+
 ![Trial Match screenshot](docs/screenshot.png)
 
 Finding trials is slow because eligibility criteria are free text: *"HbA1c between 7.5% and 10.5%"*, *"no insulin within 90 days"*, *"ECOG 0–1"*. Research coordinators read them one trial at a time. This app uses an LLM to turn that text into structured rules once per trial, then checks a patient against the rules with plain, deterministic code, so every verdict is explainable.
@@ -92,6 +94,8 @@ npm install && npm run dev
 
 Open http://localhost:3000 and pick an example patient.
 
+**Static demo (GitHub Pages):** `scripts/build_pages.sh` packages the Python matcher and builds a static site where it runs in the browser with [Pyodide](https://pyodide.org) (Python compiled to WebAssembly). The same `trialmatch` package powers the API and the demo, and the browser fetches trials from ClinicalTrials.gov directly, falling back to the demo trials if that fails. The `Deploy demo` workflow publishes it on every push to `main`.
+
 **Docker:** `cp .env.example .env`, then `docker compose up --build`.
 
 **API only:**
@@ -108,7 +112,7 @@ Interactive API docs: http://localhost:8000/docs
 ## Tests
 
 ```bash
-cd backend && pytest && ruff check .     # 50 tests: extractors, parser, matcher, API, ClinicalTrials.gov client
+cd backend && pytest && ruff check .     # 55 tests: extractors, parser, matcher, engine, API, ClinicalTrials.gov client
 cd frontend && npm test && npm run typecheck && npm run build
 ```
 

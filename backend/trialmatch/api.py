@@ -9,12 +9,12 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import matcher
 from .config import Settings
 from .ctgov import ClinicalTrialsClient, SampleTrials
+from .engine import UNREACHABLE_NOTICE, MatchInputError, resolve_patient, run_match
 from .extractor import CriteriaService, build_service
 from .models import MatchRequest, MatchResponse, ParsePatientRequest, Patient, Trial
-from .patient_parser import LLMPatientParser, normalize_patient, parse_rules
+from .patient_parser import LLMPatientParser, parse_rules
 
 log = logging.getLogger(__name__)
 
@@ -77,22 +77,10 @@ def create_app(
 
     @app.post("/api/match", response_model=MatchResponse)
     def match(body: MatchRequest) -> MatchResponse:
-        if body.patient is not None:
-            patient = normalize_patient(body.patient)
-        elif body.patient_description:
-            patient = parse_patient(body.patient_description)
-        else:
-            raise HTTPException(422, "Provide patient_description or patient.")
-
-        condition = (body.condition or (patient.conditions[0] if patient.conditions else "")).strip()
-        if not condition:
-            raise HTTPException(422, "Could not tell which condition to search for. Add a condition.")
-        # The searched condition is the reason for enrolling; count it as present.
-        from .vocab import normalize_condition
-
-        canonical = normalize_condition(condition)
-        if canonical not in patient.conditions:
-            patient = patient.model_copy(update={"conditions": [canonical, *patient.conditions]})
+        try:
+            patient, condition = resolve_patient(body, parse=parse_patient)
+        except MatchInputError as exc:
+            raise HTTPException(422, str(exc)) from exc
 
         data_source = "clinicaltrials.gov" if isinstance(source, ClinicalTrialsClient) else "sample"
         notice = None
@@ -102,20 +90,8 @@ def create_app(
             log.warning("ClinicalTrials.gov unavailable (%s); using sample trials.", exc)
             trials = sample.search(condition, limit=settings.max_trials_screened)
             data_source = "sample"
-            notice = "ClinicalTrials.gov could not be reached, so these results use the bundled demo trials."
-        if data_source == "sample" and notice is None:
-            notice = "Demo mode: results use synthetic sample trials, not real studies."
-
-        results = matcher.rank([matcher.match_trial(t, service.for_trial(t), patient) for t in trials])
-        return MatchResponse(
-            patient=patient,
-            condition=condition,
-            data_source=data_source,
-            extractor=service.name,
-            trials_screened=len(trials),
-            results=results[: body.limit],
-            notice=notice,
-        )
+            notice = UNREACHABLE_NOTICE
+        return run_match(patient, condition, trials, service, data_source, body.limit, notice)
 
     return app
 

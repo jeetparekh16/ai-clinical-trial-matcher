@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ResultList } from "@/components/ResultList";
+import { ENGINE, loadEngine, runMatch } from "@/lib/engine";
 import { patientFacts } from "@/lib/format";
 import type { MatchResponse } from "@/lib/types";
 
@@ -26,28 +27,29 @@ export default function Home() {
   const [data, setData] = useState<MatchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  // In the browser demo, start loading the Python engine while the visitor reads.
+  useEffect(() => {
+    if (ENGINE === "browser") loadEngine().catch(() => undefined);
+  }, []);
 
   async function findTrials(event?: React.FormEvent) {
     event?.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/match", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ patient_description: description, condition: condition.trim() || null, limit: 15 }),
-      });
-      const body = await response.json();
-      if (!response.ok) {
-        const detail = typeof body.detail === "string" ? body.detail : "Check the description and try again.";
-        throw new Error(detail);
-      }
-      setData(body as MatchResponse);
+      const result = await runMatch(
+        { patient_description: description, condition: condition.trim() || null, limit: 15 },
+        setStatus,
+      );
+      setData(result);
     } catch (e) {
       setData(null);
-      setError(e instanceof TypeError ? "The matching service is not running. Start the backend on port 8000." : (e as Error).message);
+      setError((e as Error).message);
     } finally {
       setLoading(false);
+      setStatus(null);
     }
   }
 
@@ -93,6 +95,7 @@ export default function Home() {
           <button type="submit" className="primary" disabled={loading}>
             {loading ? "Checking trials…" : "Find trials"}
           </button>
+          {status && <p className="fine status" role="status">{status}</p>}
         </form>
 
         {data && (
